@@ -17,5 +17,5 @@ COPY --from=build /usr/local/kafka-eagle ${KE_HOME}
 RUN tar zxf kafka-eagle-${version}-bin.tar.gz \
     && rm kafka-eagle-${version}-bin.tar.gz \
     && mv kafka-eagle-${version}-bin kafka-eagle \
-	  && chmod +x bin/ke.sh
+    && chmod +x bin/ke.sh
 ENTRYPOINT ["sh", "${KE_HOME}/bin/ke.sh"]
