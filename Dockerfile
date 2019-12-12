@@ -8,8 +8,10 @@ RUN curl -fsSL -O $download \
     && tar -zxf v${version}.tar.gz \
     && rm -rf v${version}.tar.gz \
     && ls -l \
-    && tar -zxf v${version}/kafka-eagle-web-${version}-bin.tar.gz \
-    && rm -rf v${version} \
+    && pwd \
+    && ls -l kafka-eagle-bin-${version} \
+    && tar -zxf kafka-eagle-bin-${version}/kafka-eagle-web-${version}-bin.tar.gz \
+    && rm -rf kafka-eagle-bin-${version} \
     && mv kafka-eagle-web-${version} kafka-eagle \
     && echo "rm and ls" \
     && ls kafka-eagle \
