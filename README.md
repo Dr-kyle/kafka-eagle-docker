@@ -20,7 +20,7 @@ xianlab/kafka-eagle:v1.4.1
 ### Using custom Docker images
 
 ```sh
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+FROM xianlab/kafka-eagle:v1.4.1
 COPY log4j.properties /app/kafka-eagle/conf
 COPY system-config.properties /app/kafka-eagle/conf
 ```
