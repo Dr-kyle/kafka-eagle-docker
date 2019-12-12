@@ -5,11 +5,11 @@ WORKDIR /app
 RUN curl -fsSL -O $download \
     && ls -l \
     && echo "download success" \
-    && tar -zxf kafka-eagle-bin-${version}.tar.gz \
-    && rm -rf kafka-eagle-bin-${version}.tar.gz \
+    && tar -zxf v${version}.tar.gz \
+    && rm -rf v${version}.tar.gz \
     && ls -l \
-    && tar -zxf kafka-eagle-bin-${version}/kafka-eagle-web-${version}-bin.tar.gz \
-    && rm -rf kafka-eagle-bin-${version} \
+    && tar -zxf v${version}/kafka-eagle-web-${version}-bin.tar.gz \
+    && rm -rf v${version} \
     && mv kafka-eagle-web-${version} kafka-eagle \
     && echo "rm and ls" \
     && ls kafka-eagle \
