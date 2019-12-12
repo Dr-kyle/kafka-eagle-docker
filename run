@@ -1,0 +1,4 @@
+#!/bin/bash
+sh /app/kafka-eagle/bin/ke.sh start
+sleep 3
+tail -f /app/kafka-eagle/logs/log.log
