@@ -2,11 +2,15 @@ FROM governmentpaas/curl-ssl:latest as download
 ARG version=1.4.1
 ARG download=https://github.com/smartloli/kafka-eagle-bin/archive/v${version}.tar.gz
 WORKDIR /app
-RUN curl -o kafka-eagle.tar.gz $download \
-    && tar zxf kafka-eagle.tar.gz \
-    && ls -l\
-    && mv kafka-eagle-bin-${version} kafka-eagle \
-    && rm -rf kafka-eagle.tar.gz \
+RUN curl -fsSL -O $download \
+    && ls -l \
+    && echo "download success"
+    && tar -zxf kafka-eagle-bin-${version}.tar.gz \
+    && rm -rf kafka-eagle-bin-${version}.tar.gz \
+    && ls -l \
+    && tar -zxf kafka-eagle-bin-${version}/kafka-eagle-web-${version}-bin.tar.gz \
+    && rm -rf kafka-eagle-bin-${version} \
+    && mv kafka-eagle-web-${version} kafka-eagle \
     && echo "rm and ls" \
     && ls kafka-eagle \
     && chmod +x kafka-eagle/bin/ke.sh
