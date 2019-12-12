@@ -1,21 +1,22 @@
 FROM alpine/git as clone
 ARG url=https://github.com/smartloli/kafka-eagle.git
-WORKDIR /usr/local
+WORKDIR /app
 RUN git clone ${url}
 
 FROM maven:3.6-jdk-8-alpine as build
-WORKDIR /usr/local/kafka-eagle
-COPY --from=clone /usr/local/kafka-eagle /usr/local/kafka-eagle
+COPY --from=clone /app /app
+WORKDIR /app/kafka-eagle
 RUN mvn clean \
     && mvn package -DskipTests
 
 FROM openjdk:8-jre-alpine
-ENV KE_HOME /usr/local/kafka-eagle
+ARG version=1.4.1
+ENV KE_HOME /app/kafka-eagle
 ENV PATH $PATH:$KE_HOME/bin 
-WORKDIR /usr/local/kafka-eagle
-COPY --from=build /usr/local/kafka-eagle ${KE_HOME}
-RUN tar zxf kafka-eagle-${version}-bin.tar.gz \
-    && rm kafka-eagle-${version}-bin.tar.gz \
-    && mv kafka-eagle-${version}-bin kafka-eagle \
+WORKDIR /app
+COPY --from=build /app/kafka-eagle/kafka-eagle-web/target/kafka-eagle-web-${versioon}-bin.tar.gz /app
+RUN tar zxf kafka-eagle-web-${versioon}-bin.tar.gz \
+    && rm -rf kafka-eagle-web-${versioon}-bin.tar.gz \
+    && mv kafka-eagle-web-${versioon}-bin kafka-eagle \
     && chmod +x bin/ke.sh
 ENTRYPOINT ["sh", "${KE_HOME}/bin/ke.sh"]
