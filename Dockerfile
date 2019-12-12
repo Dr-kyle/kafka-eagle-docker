@@ -15,4 +15,4 @@ ENV KE_HOME /app/kafka-eagle
 ENV PATH $PATH:$KE_HOME/bin
 WORKDIR /app
 COPY --from=download /app/kafka-eagle /app/kafka-eagle
-CMD ["sh", "/app/kafka-eagle/bin/ke.sh", "start"]
+CMD ["sh", "/app/kafka-eagle/bin/ke.sh start && tail -f /app/kafka-eagle/logs/log.log"]
