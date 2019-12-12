@@ -15,5 +15,6 @@ ENV KE_HOME /app/kafka-eagle
 ENV PATH $PATH:$KE_HOME/bin
 WORKDIR /app
 COPY --from=download /app/kafka-eagle /app/kafka-eagle
-COPY run /app
-ENTRYPOINT ["sh","/app/run"]
+COPY run ./
+RUN chmod +x run
+ENTRYPOINT ["sh","run"]
