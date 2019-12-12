@@ -4,7 +4,7 @@ ARG download=https://github.com/smartloli/kafka-eagle-bin/archive/v${version}.ta
 WORKDIR /app
 RUN curl -fsSL -O $download \
     && ls -l \
-    && echo "download success"
+    && echo "download success" \
     && tar -zxf kafka-eagle-bin-${version}.tar.gz \
     && rm -rf kafka-eagle-bin-${version}.tar.gz \
     && ls -l \
