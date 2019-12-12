@@ -10,9 +10,11 @@ RUN curl -fsSL -O $download \
     && mv kafka-eagle-web-${version} kafka-eagle \
     && chmod +x kafka-eagle/bin/ke.sh
 
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-alpine
 ENV KE_HOME /app/kafka-eagle
 ENV PATH $PATH:$KE_HOME/bin
+RUN env && \
+    ls -l $JAVA_HOME/bin/
 WORKDIR /app
 COPY --from=download /app/kafka-eagle /app/kafka-eagle
 ENTRYPOINT ["sh", "/app/kafka-eagle/bin/ke.sh", "start"]
