@@ -3,7 +3,6 @@ ARG version=1.4.1
 ARG download=https://github.com/smartloli/kafka-eagle-bin/archive/v${version}.tar.gz
 WORKDIR /app
 RUN curl -fsSL -O $download \
-    && echo "download success" \
     && tar -zxf v${version}.tar.gz \
     && rm -rf v${version}.tar.gz \
     && tar -zxf kafka-eagle-bin-${version}/kafka-eagle-web-${version}-bin.tar.gz \
@@ -16,4 +15,4 @@ ENV KE_HOME /app/kafka-eagle
 ENV PATH $PATH:$KE_HOME/bin
 WORKDIR /app
 COPY --from=download /app/kafka-eagle /app/kafka-eagle
-ENTRYPOINT ["sh", "${KE_HOME}/bin/ke.sh", "start"]
+ENTRYPOINT ["sh", "/app/kafka-eagle/bin/ke.sh", "start"]
