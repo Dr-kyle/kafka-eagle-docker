@@ -1,22 +1,16 @@
-FROM alpine/git as clone
-ARG url=https://github.com/smartloli/kafka-eagle.git
+FROM governmentpaas/curl-ssl:latest as download
+ARG version=v1.4.1
+ARG download=https://github.com/smartloli/kafka-eagle-bin/archive/${version}.tar.gz
 WORKDIR /app
-RUN git clone ${url}
-
-FROM maven:3.6-jdk-8-alpine as build
-COPY --from=clone /app /app
-WORKDIR /app/kafka-eagle
-RUN mvn clean \
-    && mvn package -DskipTests
+RUN curl -fsSL -o kafka-eagle.tar.gz $download \
+    && tar zxf kafka-eagle.tar.gz \
+    && ls \
+    && rm -rf kafka-eagle.tar.gz \
+    && chmod +x kafka-eagle/bin/ke.sh
 
 FROM openjdk:8-jre-alpine
-ARG version=1.4.1
 ENV KE_HOME /app/kafka-eagle
-ENV PATH $PATH:$KE_HOME/bin 
+ENV PATH $PATH:$KE_HOME/bin
 WORKDIR /app
-COPY --from=build /app/kafka-eagle/kafka-eagle-web/target/kafka-eagle-web-${versioon}-bin.tar.gz /app
-RUN tar zxf kafka-eagle-web-${versioon}-bin.tar.gz \
-    && rm -rf kafka-eagle-web-${versioon}-bin.tar.gz \
-    && mv kafka-eagle-web-${versioon}-bin kafka-eagle \
-    && chmod +x bin/ke.sh
+COPY --from=download /app/kafka-eagle /app/kafka-eagle
 ENTRYPOINT ["sh", "${KE_HOME}/bin/ke.sh"]
