@@ -13,8 +13,6 @@ RUN curl -fsSL -O $download \
 FROM openjdk:8-alpine
 ENV KE_HOME /app/kafka-eagle
 ENV PATH $PATH:$KE_HOME/bin
-RUN env && \
-    ls -l $JAVA_HOME/bin/
 WORKDIR /app
 COPY --from=download /app/kafka-eagle /app/kafka-eagle
-ENTRYPOINT ["sh", "/app/kafka-eagle/bin/ke.sh", "start"]
+CMD ["sh", "/app/kafka-eagle/bin/ke.sh", "start"]
